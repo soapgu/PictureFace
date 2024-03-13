@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="compareResultList"
+            type="java.util.List&lt;com.space365.face.arcsoft.ui.model.CompareResult&gt;" />
+
+        <variable
+            name="recognizeNotice"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="com.space365.face.arcsoft.ui.viewmodel.PreviewViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/dual_camera_ll_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start">
+
+            <TextureView
+                android:id="@+id/dual_camera_texture_preview_rgb"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical" />
+
+            <com.space365.face.arcsoft.widget.FaceRectView
+                android:id="@+id/dual_camera_face_rect_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical" />
+
+            <FrameLayout
+                android:id="@+id/fl_recognize_ir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+                <TextureView
+                    android:id="@+id/dual_camera_texture_preview_ir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <com.space365.face.arcsoft.widget.FaceRectView
+                    android:id="@+id/dual_camera_face_rect_view_ir"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:visibility="gone"
+            android:layout_margin="@dimen/common_margin"
+            android:orientation="vertical">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.registerFromFiles()}"
+                android:text="@string/register_from_file" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.registerFromFeatures()}"
+                android:text="@string/register_from_feature" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dual_camera_recycler_view_person"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:compareResultList="@{compareResultList}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/color_black_shadow"
+            android:text="@{recognizeNotice}"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:visibility="@{(recognizeNotice == null || recognizeNotice.length() == 0)?View.GONE:View.VISIBLE}" />
+    </FrameLayout>
+</layout>
